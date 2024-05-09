@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,9 @@ public class BeneficiarioController {
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Beneficiario beneficiario) {
 
+        beneficiario.setDataInclusao(LocalDateTime.now());
+        beneficiario.setDataAtualizacao(LocalDateTime.now());
+
         try {
             // novo plano de saude de um beneficiario
             Beneficiario bnfPlano = new Beneficiario(beneficiario.getNome(),
@@ -66,6 +70,9 @@ public class BeneficiarioController {
             // criando um arrayList dos documentos
             List<Document> documentList = new ArrayList<>();
             for (Document bnfDocument : beneficiario.getDocumentos()){
+
+                bnfDocument.setDataInclusao(LocalDateTime.now());
+                bnfDocument.setDataAtualizacao(LocalDateTime.now());
 
                 // novo documento
                 Document document = new Document(bnfDocument.getTipoDocumento(), bnfDocument.getDescricao(),
@@ -105,8 +112,7 @@ public class BeneficiarioController {
             beneficiarioAlter.setNome(beneficiario.getNome());
             beneficiarioAlter.setTelefone(beneficiario.getTelefone());
             beneficiarioAlter.setDataNascimento(beneficiario.getDataNascimento());
-            beneficiarioAlter.setDataInclusao(beneficiario.getDataInclusao());
-            beneficiarioAlter.setDataAtualizacao(beneficiario.getDataAtualizacao());
+            beneficiarioAlter.setDataAtualizacao(LocalDateTime.now());
             Beneficiario beneficiarioDB = beneficiarioRepository.save(beneficiarioAlter);
             return ResponseEntity.ok(beneficiarioDB);
         }).orElse(ResponseEntity.notFound().build());

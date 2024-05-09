@@ -3,6 +3,8 @@ package com.example.cadastrobeneficiario.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "document")
 public class Document {
@@ -15,9 +17,9 @@ public class Document {
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "dataInclusao")
-    private String dataInclusao;
+    private LocalDateTime dataInclusao;
     @Column(name = "dataAtualizacao")
-    private String dataAtualizacao;
+    private LocalDateTime dataAtualizacao;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
@@ -27,7 +29,7 @@ public class Document {
     public Document(){
     }
 
-    public Document(String tipoDocumento, String descricao, String dataInclusao, String dataAtualizacao) {
+    public Document(String tipoDocumento, String descricao, LocalDateTime dataInclusao, LocalDateTime dataAtualizacao) {
         this.tipoDocumento = tipoDocumento;
         this.descricao = descricao;
         this.dataInclusao = dataInclusao;
@@ -58,19 +60,19 @@ public class Document {
         this.descricao = descricao;
     }
 
-    public String getDataInclusao() {
+    public LocalDateTime getDataInclusao() {
         return dataInclusao;
     }
 
-    public void setDataInclusao(String dataInclusao) {
+    public void setDataInclusao(LocalDateTime dataInclusao) {
         this.dataInclusao = dataInclusao;
     }
 
-    public String getDataAtualizacao() {
+    public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(String dataAtualizacao) {
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 

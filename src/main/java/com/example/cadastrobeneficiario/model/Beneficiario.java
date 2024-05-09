@@ -2,29 +2,42 @@ package com.example.cadastrobeneficiario.model;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
 @Table(name = "beneficiario")
+@JsonPropertyOrder({ "id", "nome", "telefone", "dataNascimento", "dataInclusao", "dataAtualizacao", "documentos"})
 public class Beneficiario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("Id")
     @Column(name = "ID")
     private Long id;
+    @JsonProperty("nome")
     @Column(name = "name")
     private String name;
+    @JsonProperty("telefone")
     @Column(name = "telefone")
     private Long telefone;
+    @JsonProperty("dataNascimento")
     @Column(name = "dataNascimento")
     private String dataNascimento;
+    @JsonProperty("dataInclusao")
     @Column(name = "dataInclusao")
-    private String dataInclusao;
+    private LocalDateTime dataInclusao;
+    @JsonProperty("dataAtualizacao")
     @Column(name = "dataAtualizacao")
-    private String dataAtualizacao;
+    private LocalDateTime dataAtualizacao;
 
+    @JsonProperty("documentos")
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "beneficiario", cascade = CascadeType.ALL)
     private List<Document> documentos;
@@ -32,7 +45,7 @@ public class Beneficiario {
     public Beneficiario() {
 
     }
-    public Beneficiario(String name, Long telefone, String dataNascimento, String dataInclusao, String dataAtualizacao) {
+    public Beneficiario(String name, Long telefone, String dataNascimento, LocalDateTime dataInclusao, LocalDateTime dataAtualizacao) {
         this.name = name;
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
@@ -72,19 +85,19 @@ public class Beneficiario {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getDataInclusao() {
+    public LocalDateTime getDataInclusao() {
         return dataInclusao;
     }
 
-    public void setDataInclusao(String dataInclusao) {
+    public void setDataInclusao(LocalDateTime dataInclusao) {
         this.dataInclusao = dataInclusao;
     }
 
-    public String getDataAtualizacao() {
+    public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(String dataAtualizacao) {
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 
