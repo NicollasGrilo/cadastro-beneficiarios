@@ -5,6 +5,8 @@ import com.example.cadastrobeneficiario.model.Document;
 import com.example.cadastrobeneficiario.model.ErrorMessage;
 import com.example.cadastrobeneficiario.repository.BeneficiarioRepository;
 import com.example.cadastrobeneficiario.repository.DocumentRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import static org.springframework.http.HttpStatus.OK;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/beneficiarios")
+@Tag(name = "Beneficiarios")
 public class BeneficiarioController {
 
     private final BeneficiarioRepository beneficiarioRepository;
@@ -30,6 +33,7 @@ public class BeneficiarioController {
 
     @ResponseStatus(OK)
     @GetMapping("/listarCadastros")
+    @Operation(summary = "Lista todos os beneficiarios cadastrados")
     public ResponseEntity<List<Beneficiario>> listarBeneficiarios(){
 
         List<Beneficiario> beneficiarios = beneficiarioRepository.findAll();
@@ -39,6 +43,7 @@ public class BeneficiarioController {
 
     @ResponseStatus(OK)
     @GetMapping("/documents/{id}")
+    @Operation(summary = "Lista todos os documentos de um beneficiario a partir de seu id")
     public ResponseEntity<?> listarDocumentosBeneficiario(@PathVariable Long id){
 
         Optional<Beneficiario> byId = beneficiarioRepository.findById(id);
@@ -56,6 +61,7 @@ public class BeneficiarioController {
     }
 
     @PostMapping("/cadastrar")
+    @Operation(summary = "Cadastra um beneficiario junto com seus documentos")
     public ResponseEntity<?> cadastrar(@RequestBody Beneficiario beneficiario) {
 
         beneficiario.setDataInclusao(LocalDateTime.now());
@@ -97,6 +103,7 @@ public class BeneficiarioController {
 
     @ResponseStatus(OK)
     @PutMapping("/{id}")
+    @Operation(summary = "Atualiza os dados cadastrais de um beneficiario")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Beneficiario beneficiario){
 
         Optional<Beneficiario> byId = beneficiarioRepository.findById(id);
@@ -120,6 +127,7 @@ public class BeneficiarioController {
 
     @ResponseStatus(OK)
     @DeleteMapping("/{id}")
+    @Operation(summary = "Remove um beneficiario")
     public ResponseEntity<?> delete(@PathVariable Long id){
 
         Optional<Beneficiario> beneficiario = beneficiarioRepository.findById(id);
