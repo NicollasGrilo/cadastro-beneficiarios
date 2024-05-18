@@ -6,6 +6,8 @@ import com.example.cadastrobeneficiario.model.RegisterDTO;
 import com.example.cadastrobeneficiario.repository.UserRepository;
 import com.example.cadastrobeneficiario.services.TokenService;
 import com.example.cadastrobeneficiario.user.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication")
 public class AuthController {
 
     @Autowired
@@ -31,6 +34,7 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login para realizar as operações")
     public ResponseEntity login(@RequestBody @Valid AuthDTO data){
         var userPassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(userPassword);
@@ -41,6 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Registro para realizar as operações")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if (this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
